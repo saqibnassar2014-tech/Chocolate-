@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasty & Delicious Food - Chocolate Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B4513, #D2691E, #CD853F);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 40px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: slideIn 0.6s ease-in-out;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide h1 {
+            font-size: 3.5em;
+            color: #8B4513;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite alternate;
+        }
+        
+        .slide h2 {
+            font-size: 2.5em;
+            color: #D2691E;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .slide h3 {
+            font-size: 2em;
+            color: #8B4513;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        
+        .food-card {
+            background: linear-gradient(145deg, #fff, #f5f5f5);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border-color: #D2691E;
+        }
+        
+        .food-emoji {
+            font-size: 4em;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .food-card h4 {
+            color: #8B4513;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .food-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+        
+        .chocolate-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+        
+        .chocolate-item {
+            background: linear-gradient(145deg, #f4e6d3, #e8d5b7);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .chocolate-item:hover {
+            transform: rotateY(5deg) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.4);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(145deg, #D2691E, #8B4513);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(145deg, #FF6347, #D2691E);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(139, 69, 19, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .benefits-list {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .benefit-item {
+            background: linear-gradient(145deg, #fff, #f9f9f9);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #D2691E;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .benefit-item h4 {
+            color: #8B4513;
+            margin-bottom: 8px;
+            font-size: 1.3em;
+        }
+        
+        .recipe-card {
+            background: linear-gradient(145deg, #fff8e7, #f5f1e8);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 2px solid #D2691E;
+        }
+        
+        .recipe-card h4 {
+            color: #8B4513;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .ingredients, .steps {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .ingredients h5, .steps h5 {
+            color: #D2691E;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .ingredients ul, .steps ol {
+            color: #666;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        
+        .fun-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+        
+        .fact-bubble {
+            background: radial-gradient(circle, #fff, #f8f8f8);
+            border-radius: 50px;
+            padding: 25px;
+            text-align: center;
+            border: 3px solid #D2691E;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .fact-bubble:hover {
+            transform: rotate(2deg) scale(1.05);
+            border-color: #8B4513;
+        }
+        
+        .closing-message {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(145deg, #fff, #f5f5f5);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 3px solid #D2691E;
+        }
+        
+        .closing-message h3 {
+            color: #8B4513;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        .closing-message p {
+            font-size: 1.3em;
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">8</span>
+        </div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>🍫 Tasty & Delicious Food 🍫</h1>
+            <div style="font-size: 6em; margin: 30px 0;">🍰🍕🍔🍫🍩</div>
+            <h2>Especially the Magic of Chocolate!</h2>
+            <p style="font-size: 1.5em; color: #666; margin-top: 30px; text-align: center;">
+                Discover the world of amazing flavors that make life sweeter
+            </p>
+        </div>
+        
+        <!-- Slide 2: What Makes Food Delicious -->
+        <div class="slide">
+            <h2>What Makes Food Absolutely Delicious? 🤤</h2>
+            <div class="content-grid">
+                <div class="food-card">
+                    <div class="food-emoji">👅</div>
+                    <h4>Amazing Flavors</h4>
+                    <p>Sweet, savory, spicy, and umami - the perfect combination that makes our taste buds dance with joy!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🌡️</div>
+                    <h4>Perfect Temperature</h4>
+                    <p>Hot chocolate on a cold day, ice cream in summer - temperature can transform good food into extraordinary experiences!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🎨</div>
+                    <h4>Beautiful Presentation</h4>
+                    <p>We eat with our eyes first! Colorful, artistic plating makes food irresistible before we even taste it.</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🧪</div>
+                    <h4>Perfect Texture</h4>
+                    <p>Crispy, creamy, chewy, smooth - texture adds another dimension that makes food memorable and satisfying!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Chocolate Types -->
+        <div class="slide">
+            <h2>🍫 The Wonderful World of Chocolate! 🍫</h2>
+            <div class="chocolate-showcase">
+                <div class="chocolate-item">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🍫</div>
+                    <h4>Dark Chocolate</h4>
+                    <p>Rich, intense, and sophisticated. The deeper the cocoa, the more complex the flavor!</p>
+                </div>
+                <div class="chocolate-item">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🥛</div>
+                    <h4>Milk Chocolate</h4>
+                    <p>Creamy, sweet, and comforting. The perfect balance of cocoa and smooth dairy goodness!</p>
+                </div>
+                <div class="chocolate-item">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🤍</div>
+                    <h4>White Chocolate</h4>
+                    <p>Sweet and buttery with vanilla notes. Technically not chocolate, but absolutely delicious!</p>
+                </div>
+                <div class="chocolate-item">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🌰</div>
+                    <h4>Ruby Chocolate</h4>
+                    <p>The newest variety with a unique pink color and berry-like flavor. Nature's own innovation!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Chocolate Benefits -->
+        <div class="slide">
+            <h2>🎉 Amazing Benefits of Chocolate! 🎉</h2>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4>💖 Heart Health</h4>
+                    <p>Dark chocolate contains flavonoids that can help improve cardiovascular health and blood flow!</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>🧠 Brain Power</h4>
+                    <p>Chocolate can boost cognitive function and improve memory. Sweet brain food!</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>😊 Mood Booster</h4>
+                    <p>Chocolate releases endorphins and serotonin - natural chemicals that make us happy!</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>💪 Antioxidants</h4>
+                    <p>Packed with antioxidants that help fight free radicals and keep our cells healthy!</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>⚡ Energy Boost</h4>
+                    <p>Natural caffeine and theobromine provide a gentle, sustained energy lift!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Popular Chocolate Treats -->
+        <div class="slide">
+            <h2>🎂 Most Popular Chocolate Treats! 🎂</h2>
+            <div class="content-grid">
+                <div class="food-card">
+                    <div class="food-emoji">🧁</div>
+                    <h4>Chocolate Cupcakes</h4>
+                    <p>Fluffy, moist, and topped with rich frosting. Perfect for celebrations!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🍪</div>
+                    <h4>Chocolate Chip Cookies</h4>
+                    <p>America's favorite! Crispy edges, chewy center, melty chocolate chips.</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🍰</div>
+                    <h4>Chocolate Cake</h4>
+                    <p>Layer upon layer of chocolate heaven. The ultimate celebration dessert!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🍨</div>
+                    <h4>Chocolate Ice Cream</h4>
+                    <p>Cool, creamy, and refreshing. Summer's most beloved frozen treat!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🥧</div>
+                    <h4>Chocolate Pie</h4>
+                    <p>Rich, silky, and indulgent. A slice of chocolate paradise!</p>
+                </div>
+                <div class="food-card">
+                    <div class="food-emoji">🍩</div>
+                    <h4>Chocolate Donuts</h4>
+                    <p>Glazed, filled, or frosted. The perfect morning (or anytime) treat!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Fun Chocolate Facts -->
+        <div class="slide">
+            <h2>🤓 Amazing Chocolate Facts! 🤓</h2>
+            <div class="fun-facts">
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🏛️</div>
+                    <h4>Ancient Origins</h4>
+                    <p>The Aztecs used cocoa beans as currency! Chocolate was literally money!</p>
+                </div>
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🌍</div>
+                    <h4>Global Love</h4>
+                    <p>Americans consume 2.8 billion pounds of chocolate annually!</p>
+                </div>
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🌡️</div>
+                    <h4>Perfect Melting</h4>
+                    <p>Chocolate melts at 98.6°F - exactly human body temperature!</p>
+                </div>
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🍫</div>
+                    <h4>Biggest Bar</h4>
+                    <p>The largest chocolate bar ever made weighed over 12,000 pounds!</p>
+                </div>
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🐕</div>
+                    <h4>Pet Safety</h4>
+                    <p>Chocolate is toxic to dogs and cats - keep it away from furry friends!</p>
+                </div>
+                <div class="fact-bubble">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">💡</div>
+                    <h4>Innovation</h4>
+                    <p>The chocolate chip cookie was invented by accident in 1938!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Simple Chocolate Recipe -->
+        <div class="slide">
+            <h2>👨‍🍳 Easy Chocolate Mug Cake Recipe! 👨‍🍳</h2>
+            <div class="recipe-card">
+                <h4>🍫 5-Minute Chocolate Mug Cake 🍫</h4>
+                <div class="ingredients">
+                    <h5>Ingredients:</h5>
+                    <ul>
+                        <li>4 tablespoons flour</li>
+                        <li>4 tablespoons sugar</li>
+                        <li>2 tablespoons cocoa powder</li>
+                        <li>1/4 teaspoon baking powder</li>
+                        <li>3 tablespoons milk</li>
+                        <li>2 tablespoons vegetable oil</li>
+                        <li>2 tablespoons chocolate chips (optional)</li>
+                    </ul>
+                </div>
+                <div class="steps">
+                    <h5>Steps:</h5>
+                    <ol>
+                        <li>Mix dry ingredients in a microwave-safe mug</li>
+                        <li>Add milk and oil, stir well</li>
+                        <li>Add chocolate chips if desired</li>
+                        <li>Microwave for 1 minute 30 seconds</li>
+                        <li>Let cool for 1 minute and enjoy! 🎉</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Closing -->
+        <div class="slide">
+            <div class="closing-message">
+                <h3>🌟 Life is Like a Box of Chocolates! 🌟</h3>
+                <p>Food brings people together, creates memories, and adds sweetness to our lives. Whether it's a simple chocolate chip cookie shared with friends or an elaborate chocolate cake for a special celebration, delicious food makes every moment more special!</p>
+                <div style="font-size: 4em; margin: 30px 0;">🍫💖🍰</div>
+                <p style="font-style: italic; color: #8B4513; font-weight: 600;">
+                    "There is nothing better than a friend, unless it is a friend with chocolate!" 
+                </p>
+                <div style="margin-top: 30px;">
+                    <h4>Thank you for joining this delicious journey! 🙏</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">⬅️ Previous</button>
+            <button class="nav-btn" onclick="nextSlide()">Next ➡️</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Auto-advance slides every 15 seconds (optional)
+        // setInterval(nextSlide, 15000);
+    </script>
+</body>
+</html>
